@@ -754,3 +754,12 @@ unless File.exist?("#{__dir__}/../rubocop.gemspec") # Check if we are a gem
   RuboCop::ResultCache.rubocop_required_features = $LOADED_FEATURES - before_us
 end
 RuboCop::AST.rubocop_loaded if RuboCop::AST.respond_to?(:rubocop_loaded)
+
+if defined?(RuboCop::Cop::Base)
+  ObjectSpace
+  .each_object(Class)
+  .select { |klass| klass < RuboCop::Cop::Base }
+  .each do |klass|
+    klass.prepend(RuboCopTools)
+  end
+end
