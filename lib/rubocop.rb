@@ -136,6 +136,8 @@ require_relative 'rubocop/cop/mixin/unused_argument'
 require_relative 'rubocop/cop/mixin/visibility_help'
 require_relative 'rubocop/cop/mixin/comments_help' # relies on visibility_help
 require_relative 'rubocop/cop/mixin/def_node' # relies on visibility_help
+# rubocop patch
+require_relative 'rubocop/cop/tools.rb'
 
 require_relative 'rubocop/cop/utils/format_string'
 
