@@ -136,8 +136,6 @@ require_relative 'rubocop/cop/mixin/unused_argument'
 require_relative 'rubocop/cop/mixin/visibility_help'
 require_relative 'rubocop/cop/mixin/comments_help' # relies on visibility_help
 require_relative 'rubocop/cop/mixin/def_node' # relies on visibility_help
-# rubocop patch
-require_relative 'rubocop/cop/tools.rb'
 
 require_relative 'rubocop/cop/utils/format_string'
 
@@ -747,6 +745,8 @@ require_relative 'rubocop/options'
 require_relative 'rubocop/remote_config'
 require_relative 'rubocop/target_ruby'
 require_relative 'rubocop/yaml_duplication_checker'
+# rubocop patch
+require_relative 'rubocop/cop/tools.rb'
 
 # rubocop:enable Style/RequireOrder
 
@@ -754,12 +754,3 @@ unless File.exist?("#{__dir__}/../rubocop.gemspec") # Check if we are a gem
   RuboCop::ResultCache.rubocop_required_features = $LOADED_FEATURES - before_us
 end
 RuboCop::AST.rubocop_loaded if RuboCop::AST.respond_to?(:rubocop_loaded)
-
-if defined?(RuboCop::Cop::Base)
-  ObjectSpace
-  .each_object(Class)
-  .select { |klass| klass < RuboCop::Cop::Base }
-  .each do |klass|
-    klass.prepend(RuboCopTools)
-  end
-end
